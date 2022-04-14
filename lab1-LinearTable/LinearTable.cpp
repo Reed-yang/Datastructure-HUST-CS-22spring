@@ -80,7 +80,7 @@ while(op){
 	printf("    	  6. GetElem        12. ListTrabverse    18. LocateList\n");
 	printf("    	  0. Exit\n");
 	printf("---------------------------------------------------------\n");
-	printf("\t请选择你的操作[0~12]:");
+	printf("\t请选择你的操作[0~20]:");
 	scanf("%d",&op);
 
     switch(op){
@@ -227,26 +227,29 @@ while(op){
             char FileName[30];
             scanf("%s", FileName);
             fp = fopen(FileName, "r+");
-            int e, i = 0;
-            if(InitList(L) == INFEASIBLE)
-                printf("创建失败！\n");
+            if(!fp)
+                printf("文件未找到！\n");
             else{
-                while (fscanf(fp, "%d ", &e) != EOF)
-                {
-                    int result = ListInsert(L, ++i, e);
-                    if(result == OK)
-                        continue;
-                    else if(result == ERROR){
-                        printf("读入失败！\n");
-                        break;
-                    }else if(result == INFEASIBLE){
-                        printf("线性表不存在！\n");
-                        break;
+                int e, i = 0;
+                if(InitList(L) == INFEASIBLE)
+                    printf("创建失败！\n");
+                else{
+                    while (fscanf(fp, "%d ", &e) != EOF)
+                    {
+                        int result = ListInsert(L, ++i, e);
+                        if(result == OK)
+                            continue;
+                        else if(result == ERROR){
+                            printf("读入失败！\n");
+                            break;
+                        }else if(result == INFEASIBLE){
+                            printf("线性表不存在！\n");
+                            break;
+                        }
                     }
+                    printf("读取成功！\n");
                 }
-                printf("读取成功！\n");
             }
-            
             getchar();getchar();
             break;
        }
@@ -455,7 +458,8 @@ status SubArrayNum(SqList L,ElemType k)
             {
                 sum+=L.elem[k];
             }
-            if(sum==k) cnt++;
+            if(sum == k) cnt++;
+                sum = 0;
         }
     }
     return cnt;
@@ -463,9 +467,9 @@ status SubArrayNum(SqList L,ElemType k)
 status SortList(SqList L)
 {
     if(L.elem==NULL) return INFEASIBLE;
-    for(int i=L.length-1;i>=1;i--)
+    for(int i=L.length-1; i>=1; i--)
     {
-        for(int j=0;j<i;j++)
+        for(int j=0; j<i; j++)
         {
             if(L.elem[j]>L.elem[j+1])
             {
