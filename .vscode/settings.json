@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "stdlib.h": "c",
+        "crtdefs.h": "c",
+        "_mingw.h": "c",
+        "malloc.h": "c"
+    }
+}
